@@ -16,6 +16,7 @@ Create python environment and install proper requirements:
     python3.9 -m venv ./venv
     . ./venv/bin/activate
     pip install -r requirements.txt
+    ./venv/bin/python ovn-event-exporter.py --sbdb tcp:0.0.0.0:6642 --bind_port 8888 --timeout 60
 
 ### Docker image
 
@@ -31,7 +32,7 @@ Use attached Docker file to create Docker image
 Help is contained in the exporter command.
 
     $ ./ovn-event-exporter.py -h
-    usage: ovn-event-exporter.py [-h] [--sbdb SBDB] [--nbdb NBDB] [--bind_port BIND_PORT] [--timeout TIMEOUT]
+    usage: ovn-event-exporter.py [-h] [--sbdb SBDB] [--nbdb NBDB] [--bind_port BIND_PORT] [--bind_address BIND_ADDRESS] [--timeout TIMEOUT]
     
     Export OVN events from OVN SouthBound Database
     
@@ -41,4 +42,6 @@ Help is contained in the exporter command.
       --nbdb NBDB           OVN Northbound OVSDB connection string
       --bind_port BIND_PORT
                             Metrics exposing TCP port
+      --bind_address BIND_ADDRESS
+                            Metrics exposing IP address
       --timeout TIMEOUT     OVS DB connection timeout

@@ -42,6 +42,8 @@ parser.add_argument('--nbdb', required=False, help="OVN Northbound OVSDB "
                     "connection string")
 parser.add_argument('--bind_port', type=int, default=9000, help="Metrics exposing "
                     "TCP port")
+parser.add_argument('--bind_address', type=str, default='0.0.0.0', help="Metrics exposing "
+                    "IP address")
 parser.add_argument('--timeout', type=int, default=30, help="OVS DB connection "
                     "timeout")
 
@@ -136,7 +138,7 @@ def null_app(environ, start_response):
     start_response("200 OK", [("Content-Type","text/plain")])
     return [b'### I wish I could be a leader\n']
 
-def start_http_server(app, port, addr = '0.0.0.0'):
+def start_http_server(app, port, addr):
     """Starts a WSGI server for prometheus metrics as a daemon thread."""
 
     class TmpServer(ThreadingWSGIServer):
@@ -181,7 +183,7 @@ if __name__ == "__main__":
 
     timer = check_leader(ovs.idl)
     app = pclient.make_wsgi_app(pclient.REGISTRY)
-    httpd = start_http_server(app, args.bind_port)
+    httpd = start_http_server(app, args.bind_port, args.bind_address)
 
     while not signal_interupt:
         # period between collection

@@ -44,6 +44,8 @@ parser.add_argument('--bind_port', type=int, default=9000, help="Metrics exposin
                     "TCP port")
 parser.add_argument('--timeout', type=int, default=30, help="OVS DB connection "
                     "timeout")
+parser.add_argument('--debug', default=False, action='store_true', help="Set "
+                    "logging level to DEBUG")
 
 
 class NotificationBackend(object):
@@ -155,6 +157,11 @@ def signal_handler(signum, frame):
 
 if __name__ == "__main__":
     args = parser.parse_args()
+
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Logging level set to DEBUG")
+
     if not bool(args.sbdb) ^ bool(args.nbdb):
         logger.error('Only NBDB or SBDB usage possible. --nbdb and --sbdb '
                      'parameter cannot be use together')

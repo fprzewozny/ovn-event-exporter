@@ -162,6 +162,8 @@ if __name__ == "__main__":
         logger.setLevel(logging.DEBUG)
         logger.debug("Logging level set to DEBUG")
 
+    logger.debug('Provided arguments: %s' % args)
+
     if not bool(args.sbdb) ^ bool(args.nbdb):
         logger.error('Only NBDB or SBDB usage possible. --nbdb and --sbdb '
                      'parameter cannot be use together')

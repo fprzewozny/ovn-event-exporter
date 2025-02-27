@@ -203,3 +203,5 @@ if __name__ == "__main__":
             httpd.set_app(null_app)
 
     timer.cancel()
+    httpd.shutdown()
+    ovs.connection.stop()
